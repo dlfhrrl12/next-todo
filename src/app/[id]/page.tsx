@@ -1,4 +1,5 @@
 import { getTodoById } from "@/api/todo-api";
+import Link from "next/link";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -9,12 +10,48 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div>
-      <h1>{todo.title}</h1>
-      <h3>{todo.author}</h3>
-      <p>{todo.content}</p>
-      <p>{new Date(todo.createdAt).toLocaleString()}</p>
-    </div>
+    // 1. 전체 레이아웃 설정
+    <main className="mx-auto max-w-3xl py-12 px-4">
+      {/* 2. 콘텐츠를 감싸는 카드 UI */}
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+        <div className="p-8">
+          {/* 3. 정보 중요도에 따른 텍스트 스타일링 */}
+          {/* 제목 */}
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
+            {todo.title}
+          </h1>
+
+          {/* 작성자 및 날짜 정보 */}
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
+            <span>작성자: {todo.author}</span>
+            <span>작성일: {new Date(todo.createdAt).toLocaleDateString()}</span>
+          </div>
+
+          {/* 구분선 */}
+          <hr className="my-6" />
+
+          {/* 내용 */}
+          <p className="text-lg leading-relaxed text-gray-800 whitespace-pre-wrap">
+            {todo.content}
+          </p>
+        </div>
+      </div>
+
+      {/* 4. 상호작용 버튼들 */}
+      <div className="mt-8 flex justify-end gap-4">
+        <Link href="/">
+          <button className="px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors">
+            목록으로
+          </button>
+        </Link>
+        <button className="px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+          수정
+        </button>
+        <button className="px-6 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors">
+          삭제
+        </button>
+      </div>
+    </main>
   );
 };
 
