@@ -1,4 +1,8 @@
-export default function Home() {
+import { getTodos } from "@/api/todo-api";
+import Link from "next/link";
+
+export default async function Home() {
+  const todos = await getTodos();
   return (
     <div className="mx-auto max-w-2xl py-12 px-4">
       <h1 className="text-center text-4xl font-bold">Next-TodoList</h1>
@@ -7,11 +11,12 @@ export default function Home() {
           New
         </button>
       </div>
-      <ul>
-        <li>1 번째 일</li>
-        <li>2 번째 일</li>
-        <li>3 번째 일</li>
+      <ul className="space-y-4">
+        {todos.map(({ id, title, isDone }) => (
+          <li className="p-4 border rounded-lg shadow-sm">{title}</li>
+        ))}
       </ul>
+      ;
     </div>
   );
 }
