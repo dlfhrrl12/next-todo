@@ -13,7 +13,11 @@ export default async function Home() {
       </div>
       <ul className="space-y-4">
         {todos.map(({ id, title, isDone }) => (
-          <li className="p-4 border rounded-lg shadow-sm">{title}</li>
+          <Link key={id} href={`/${id}`}>
+            <li className="p-4 border rounded-lg shadow-sm cursor-pointer">
+              {title}
+            </li>
+          </Link>
         ))}
       </ul>
       ;
