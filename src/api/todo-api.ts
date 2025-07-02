@@ -40,3 +40,11 @@ export const createTodo = async (newTodo: {
   const data: Todo = await res.json();
   return data;
 };
+
+export const deleteTodo = async (id: string) => {
+  const res = await fetch(`${URL}/${id}`, {
+    method: 'DELETE',
+  });
+  const data = await res.json();
+  return data;
+};
