@@ -20,13 +20,22 @@ export const getTodoById = async (id: string): Promise<Todo | null> => {
   return data;
 };
 
-export const createTodo = async (title: string) => {
+export const createTodo = async (newTodo: {
+  title: string;
+  author: string;
+  content: string;
+}) => {
   const res = await fetch(URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ title, isDone: false }),
+    body: JSON.stringify({
+      ...newTodo,
+      id: crypto.randomUUID(),
+      createAt: new Date().toString(),
+      isDone: false,
+    }),
   });
   const data: Todo = await res.json();
   return data;

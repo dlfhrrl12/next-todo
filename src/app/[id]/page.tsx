@@ -6,6 +6,8 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
 
   const todo = await getTodoById(id);
 
+  console.log('todo', todo);
+
   if (!todo) {
     return <div>해당 일정을 찾을 수 없습니다.</div>;
   }
