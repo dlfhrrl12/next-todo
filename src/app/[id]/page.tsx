@@ -1,8 +1,9 @@
-import { getTodoById } from "@/api/todo-api";
-import Link from "next/link";
+import { getTodoById } from '@/api/todo-api';
+import Link from 'next/link';
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+  const { id } = await params;
+
   const todo = await getTodoById(id);
 
   if (!todo) {

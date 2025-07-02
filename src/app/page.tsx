@@ -1,5 +1,5 @@
-import { getTodos } from "@/api/todo-api";
-import Link from "next/link";
+import { getTodos } from '@/api/todo-api';
+import Link from 'next/link';
 
 export default async function Home() {
   const todos = await getTodos();
@@ -20,7 +20,6 @@ export default async function Home() {
           </Link>
         ))}
       </ul>
-      ;
     </div>
   );
 }
