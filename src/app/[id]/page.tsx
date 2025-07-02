@@ -58,9 +58,12 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
             목록으로
           </button>
         </Link>
-        <button className="px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
-          수정
-        </button>
+
+        <Link href={`/edit/${todo.id}`}>
+          <button className="px-6 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors">
+            수정
+          </button>
+        </Link>
 
         <form action={deleteAction}>
           <button

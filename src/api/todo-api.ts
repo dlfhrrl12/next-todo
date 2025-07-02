@@ -48,3 +48,20 @@ export const deleteTodo = async (id: string) => {
   const data = await res.json();
   return data;
 };
+
+export const updateTodo = async (id: string, updateTodo: Partial<Todo>) => {
+  const res = await fetch(`${URL}/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updateTodo),
+  });
+
+  if (!res.ok) {
+    throw new Error('할 일 업데이트에 실패했습니다.');
+  }
+
+  const data: Todo = await res.json();
+  return data;
+};
