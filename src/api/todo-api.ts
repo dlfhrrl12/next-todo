@@ -33,7 +33,7 @@ export const createTodo = async (newTodo: {
     body: JSON.stringify({
       ...newTodo,
       id: crypto.randomUUID(),
-      createAt: new Date().toString(),
+      createdAt: new Date().toISOString(),
       isDone: false,
     }),
   });

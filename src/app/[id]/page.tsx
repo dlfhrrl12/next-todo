@@ -1,12 +1,11 @@
 import { getTodoById } from '@/api/todo-api';
+import { formatDate } from '@/lib/date';
 import Link from 'next/link';
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
 
   const todo = await getTodoById(id);
-
-  console.log('todo', todo);
 
   if (!todo) {
     return <div>해당 일정을 찾을 수 없습니다.</div>;
@@ -27,7 +26,7 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
           {/* 작성자 및 날짜 정보 */}
           <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
             <span>작성자: {todo.author}</span>
-            <span>작성일: {new Date(todo.createdAt).toLocaleDateString()}</span>
+            <span>작성일: {formatDate(todo.createdAt)}</span>
           </div>
 
           {/* 구분선 */}

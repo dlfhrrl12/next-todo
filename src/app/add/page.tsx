@@ -1,4 +1,5 @@
 import { createTodo } from '@/api/todo-api';
+import { revalidatePath } from 'next/cache';
 
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -19,7 +20,7 @@ const CreateTodo = () => {
 
     // API 호출 할 일 생성성
     await createTodo({ title, author, content });
-
+    revalidatePath('/');
     redirect('/');
   };
   return (
