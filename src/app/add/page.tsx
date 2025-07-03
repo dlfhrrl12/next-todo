@@ -1,27 +1,38 @@
-import { createTodo } from '@/api/todo-api';
-import { revalidatePath } from 'next/cache';
+'use client';
 
+import { useCreateTodoMutation } from '@/queries/todoMutation';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+
+import { FormEvent, useState } from 'react';
 
 const CreateTodo = () => {
-  const handleSubmit = async (formData: FormData) => {
-    'use server';
+  const router = useRouter();
+  const { mutate, isPending } = useCreateTodoMutation();
 
-    const title = formData.get('title') as string;
-    const author = formData.get('author') as string;
-    const content = formData.get('content') as string;
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [content, setContent] = useState('');
 
-    // 입력값 검증증
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!title || !author || !content) {
-      alert('모든 필드를 입력해주세요.');
+      alert('모든 필드를 채워주세요.');
       return;
     }
 
-    // API 호출 할 일 생성성
-    await createTodo({ title, author, content });
-    revalidatePath('/');
-    redirect('/');
+    mutate(
+      { title, author, content },
+      {
+        onSuccess: () => {
+          alert('할 일이 성공적으로 추가되었습니다.');
+          router.push('/');
+        },
+        onError: () => {
+          alert('할 일 추가에 실패했습니다. 다시 시도해주세요.');
+        },
+      }
+    );
   };
   return (
     <main className="mx-auto max-w-2xl py-12 px-4">
@@ -31,7 +42,7 @@ const CreateTodo = () => {
 
       {/* 입력 폼 */}
       <form
-        action={handleSubmit}
+        onSubmit={handleSubmit}
         className="space-y-6 bg-white p-8 border rounded-xl shadow-lg"
       >
         {/* 제목 입력 */}
@@ -47,8 +58,8 @@ const CreateTodo = () => {
             id="title"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="제목을 입력하세요"
-            name="title"
-            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
@@ -65,8 +76,8 @@ const CreateTodo = () => {
             id="author"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="이름 또는 닉네임을 입력하세요"
-            required
-            name="author"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
           />
         </div>
 
@@ -83,8 +94,8 @@ const CreateTodo = () => {
             rows={4}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             placeholder="할 일의 내용을 상세히 적어주세요."
-            name="content"
-            required
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         </div>
 
@@ -100,9 +111,10 @@ const CreateTodo = () => {
           </Link>
           <button
             type="submit"
+            disabled={isPending}
             className="px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
           >
-            추가하기
+            {isPending ? '추가 중...' : '추가하기'}
           </button>
         </div>
       </form>

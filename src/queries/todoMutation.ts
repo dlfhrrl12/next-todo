@@ -6,18 +6,14 @@ import { useRouter } from 'next/router';
 
 export const useCreateTodoMutation = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: createTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-      alert('할 일이 성공적으로 추가되었습니다.');
-      router.push('/');
     },
     onError: (error) => {
       console.error(error);
-      alert('할 일 추가에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };
