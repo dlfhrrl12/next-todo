@@ -4,5 +4,5 @@ export interface Todo {
   author: string;
   content: string;
   createdAt: string;
-  isDone: boolean;
+  completed: boolean;
 }

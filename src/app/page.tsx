@@ -1,5 +1,5 @@
-import { getTodos } from '@/api/todo-api';
-import Link from 'next/link';
+import { getTodos } from "@/api/todo-api";
+import Link from "next/link";
 
 export default async function Home() {
   const todos = await getTodos();
@@ -14,7 +14,7 @@ export default async function Home() {
         </Link>
       </div>
       <ul className="space-y-4 flex flex-col gap-2">
-        {todos.map(({ id, title, isDone }) => (
+        {todos.map(({ id, title, completed }) => (
           <Link key={id} href={`/${id}`}>
             <li className="p-4 border rounded-lg shadow-sm cursor-pointer">
               {title}
