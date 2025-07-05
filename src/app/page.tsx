@@ -2,8 +2,6 @@ import { getTodos } from "@/api/todo-api";
 import TodoList from "@/components/TodoList";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-
 export default async function Home() {
   const initialTodos = await getTodos();
   return (
