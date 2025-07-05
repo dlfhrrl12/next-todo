@@ -1,8 +1,9 @@
 import { getTodos } from "@/api/todo-api";
+import TodoList from "@/components/TodoList";
 import Link from "next/link";
 
 export default async function Home() {
-  const todos = await getTodos();
+  const initialTodos = await getTodos();
   return (
     <div className="mx-auto max-w-2xl py-12 px-4">
       <h1 className="text-center text-4xl font-bold">Next-TodoList</h1>
@@ -13,7 +14,7 @@ export default async function Home() {
           </button>
         </Link>
       </div>
-      <ul className="space-y-4 flex flex-col gap-2">
+      {/* <ul className="space-y-4 flex flex-col gap-2">
         {todos.map(({ id, title, completed }) => (
           <Link key={id} href={`/${id}`}>
             <li className="p-4 border rounded-lg shadow-sm cursor-pointer">
@@ -21,7 +22,8 @@ export default async function Home() {
             </li>
           </Link>
         ))}
-      </ul>
+      </ul> */}
+      <TodoList initialTodos={initialTodos} />
     </div>
   );
 }
