@@ -1,6 +1,5 @@
 "use client";
 import { getTodoById } from "@/api/todo-api";
-import { formatDate } from "@/lib/date";
 import { useDeleteTodoMutation } from "@/queries/todoMutation";
 import { useQuery } from "@tanstack/react-query";
 
